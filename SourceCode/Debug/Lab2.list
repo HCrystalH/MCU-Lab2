@@ -770,8 +770,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  80005ae:	681b      	ldr	r3, [r3, #0]
  80005b0:	2b01      	cmp	r3, #1
  80005b2:	d111      	bne.n	80005d8 <HAL_TIM_PeriodElapsedCallback+0x38>
-		setTimer1(50);
- 80005b4:	2032      	movs	r0, #50	; 0x32
+		setTimer1(100);
+ 80005b4:	2064      	movs	r0, #100	; 0x64
  80005b6:	f000 f81d 	bl	80005f4 <setTimer1>
 		update7SEG(index_led++);
  80005ba:	4b0a      	ldr	r3, [pc, #40]	; (80005e4 <HAL_TIM_PeriodElapsedCallback+0x44>)
