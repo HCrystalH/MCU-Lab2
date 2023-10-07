@@ -111,7 +111,7 @@ void update_display(int* display_flag){
 			break;
 		}
 		case 3:{
-			(*display_flag)++;
+			(*display_flag) = 0;
 			HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
@@ -158,7 +158,7 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT (& htim2 ) ;
-  setTimer1(50);	// 7-Segment LED
+  setTimer1(40);	// 7-Segment LED
   setTimer2(100);	// 2 LED_RED
   int display_flag =0;
   /* USER CODE END 2 */
@@ -168,13 +168,11 @@ int main(void)
 
   while (1)
   {
-
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  if(timer1_flag == 1){
-		  setTimer1(50);
+		  setTimer1(40);
 		  update_display(&display_flag);
 	  }
 	  if(timer2_flag == 1){
