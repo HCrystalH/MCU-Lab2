@@ -419,8 +419,8 @@ int main(void)
   HAL_TIM_Base_Start_IT (& htim2 ) ;
  80003aa:	4813      	ldr	r0, [pc, #76]	; (80003f8 <main+0x64>)
  80003ac:	f001 f96a 	bl	8001684 <HAL_TIM_Base_Start_IT>
-  setTimer1(40);	// 7-Segment LED
- 80003b0:	2028      	movs	r0, #40	; 0x28
+  setTimer1(50);	// 7-Segment LED
+ 80003b0:	2032      	movs	r0, #50	; 0x32
  80003b2:	f000 f915 	bl	80005e0 <setTimer1>
   setTimer2(100);	// 2 LED_RED
  80003b6:	2064      	movs	r0, #100	; 0x64
@@ -438,8 +438,8 @@ int main(void)
  80003c2:	681b      	ldr	r3, [r3, #0]
  80003c4:	2b01      	cmp	r3, #1
  80003c6:	d106      	bne.n	80003d6 <main+0x42>
-		  setTimer1(40);
- 80003c8:	2028      	movs	r0, #40	; 0x28
+		  setTimer1(50);
+ 80003c8:	2032      	movs	r0, #50	; 0x32
  80003ca:	f000 f909 	bl	80005e0 <setTimer1>
 		  update_display(&display_flag);
  80003ce:	1d3b      	adds	r3, r7, #4
