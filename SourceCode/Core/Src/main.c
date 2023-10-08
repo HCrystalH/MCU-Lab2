@@ -360,7 +360,7 @@ void update7SEG(int index){
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
 	if(timer1_flag == 1){
-		setTimer1(100);
+		setTimer1(25);
 		update7SEG(index_led++);
 		if(index_led > 3)	index_led = 0;
 	}
