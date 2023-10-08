@@ -247,7 +247,11 @@ int main(void)
 //	  }
 //  }
 	  //Exercise 5-7-8
-
+	  if(timer1_flag == 1){
+	  		setTimer1(100);
+	  		update7SEG(index_led++);
+	  		if(index_led > 3)	index_led = 0;
+	  }
 	 if(timer2_flag == 1){
 	 	 setTimer2(100);
 	 	 HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
@@ -403,11 +407,6 @@ static void MX_GPIO_Init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
-	 if(timer1_flag == 1){
-		  		setTimer1(100);
-		  		update7SEG(index_led++);
-		  		if(index_led > 3)	index_led = 0;
-		  }
 }
 /* USER CODE END 4 */
 
