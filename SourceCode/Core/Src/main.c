@@ -51,15 +51,20 @@ void SystemClock_Config(void);
 static void MX_TIM2_Init(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
+void display7SEG(int num);
+void update7SEG(int index);
+void updateClockBuffer();
+
+void updateLEDMatrix(int* matrix_flag);
+void display_row(uint8_t data);
+void set_row();
+void reset_all_row();
 
 const int MAX_LED = 4;
 int index_led = 0;
 int led_buffer[4] = {1, 2, 5, 9};
 /* USER CODE END PFP */
-void reset_all_row();
-void display_row(uint8_t data);
-void updateLEDMatrix(int* index);
-void set_row();
+
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void display7SEG(int num) {
@@ -278,6 +283,20 @@ void reset_all_row(){
 		HAL_GPIO_WritePin(GPIOB, row_trigger[i], RESET);
 	}
 }
+
+//Exercise 10
+uint8_t stored_buffer[8] = {0x18,0x24,0x42,0x42,0x7E,0x42,0x42,0x42};
+void update_LED_buffer(uint8_t data[MAX_LED_MATRIX]){
+	for(int i = 0; i<MAX_LED_MATRIX; i++){
+		data[i] = data[i]<<1;
+	}
+}
+
+void reset_buffer(){
+	for(int i = 0; i<MAX_LED_MATRIX; i++){
+		matrix_buffer[i] = stored_buffer[i];
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -315,8 +334,11 @@ int main(void)
   setTimer1(50);	// 7-Segment LED
   setTimer2(100);	// 2 LED_RED
   setTimer3(100);
+  setTimer4(500);
 //  int display_flag =0;
-  int matrix_flag = 0;
+
+  int matrix_flag = 0;		//For exercise 9
+  int shift_cycle_flag =0;	//For exercise 10
   int hour = 12, minute = 59, second = 50;		// For exercise 5
   /* USER CODE END 2 */
 
@@ -374,10 +396,19 @@ int main(void)
 		 updateClockBuffer();
 	 }
 
-  }
+	 if(timer4_flag == 1){
+		 setTimer4(500);
+		 shift_cycle_flag++;
+		 update_LED_buffer(matrix_buffer);
+
+		 if(shift_cycle_flag>=8){
+			 shift_cycle_flag = 0;
+			 reset_buffer();
+		 }
+	 }
   /* USER CODE END 3 */
 }
-
+}
 /**
   * @brief System Clock Configuration
   * @retval None
