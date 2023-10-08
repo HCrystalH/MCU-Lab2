@@ -52,6 +52,9 @@ static void MX_TIM2_Init(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 
+const int MAX_LED = 4;
+int index_led = 0;
+int led_buffer[4] = {1, 2, 5, 9};
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -123,6 +126,25 @@ void display7SEG(int num) {
 //	}
 //}
 
+void updateClockBuffer(){
+	led_buffer[3]++;
+	if(led_buffer[3]>=10){
+		led_buffer[3] = 0;
+		led_buffer[2]++;
+	}
+	if(led_buffer[2]>=6){
+		led_buffer[1]++;
+		led_buffer[2] =0;
+	}
+	if(led_buffer[1]>=10){
+		led_buffer[0]++;
+		led_buffer[1] =0;
+	}
+	if(led_buffer[0] == 2 && led_buffer[1] == 4){
+		led_buffer[0] = 0;
+		led_buffer[1] = 0;
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -155,15 +177,18 @@ int main(void)
   MX_TIM2_Init();
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+
   HAL_TIM_Base_Start_IT (& htim2 ) ;
   setTimer1(50);	// 7-Segment LED
   setTimer2(100);	// 2 LED_RED
+  setTimer3(100);
 //  int display_flag =0;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  int hour = 12, minute = 59, second = 50;		// For exercise 5
   while (1)
   {
     /* USER CODE END WHILE */
@@ -180,12 +205,33 @@ int main(void)
 //		  HAL_GPIO_TogglePin(GPIOA, LED_Pin);
 //	  }
 //  }
-	  if(timer2_flag == 1){
-	 			  setTimer2(100);
-	 			  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-	 			  HAL_GPIO_TogglePin(GPIOA, LED_Pin);
-	 		  }
+	 if(timer2_flag == 1){
+	 	 setTimer2(100);
+	 	 HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+	 	 HAL_GPIO_TogglePin(GPIOA, LED_Pin);
 	 }
+	 if(timer3_flag == 1){
+		 setTimer3(100);
+		 second++;
+	 }
+	 if(second >=60){
+		 second = 0;
+		 minute++;
+	 }
+	 if(minute >=60){
+		 minute = 0;
+		 hour++;
+	 }
+	 if(hour >=24){
+		 hour = 0;
+	 }
+	 int temp_hour = led_buffer[0]*10 + led_buffer[1];
+	 int temp_minute  = led_buffer[2]*10 +led_buffer[3];
+	 if(temp_hour != hour || temp_minute != minute){
+		 updateClockBuffer();
+	 }
+
+  }
   /* USER CODE END 3 */
 }
 
@@ -312,9 +358,8 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-const int MAX_LED = 4;
-int index_led = 0;
-int led_buffer[4] = {1, 2, 5, 9};
+
+
 void update7SEG(int index){
     switch (index){
         case 0:
