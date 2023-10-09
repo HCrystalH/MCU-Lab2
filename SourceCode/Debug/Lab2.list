@@ -465,11 +465,11 @@ void updateClockBuffer(){
  8000410:	20000000 	.word	0x20000000
 
 08000414 <display_row>:
-uint16_t col_trigger[] = {ENM0_Pin, ENM1_Pin, ENM2_Pin, ENM3_Pin, ENM4_Pin, ENM5_Pin, ENM6_Pin, ENM7_Pin};
 uint16_t row_trigger[] = {ROW0_Pin, ROW1_Pin, ROW2_Pin, ROW3_Pin, ROW4_Pin, ROW5_Pin, ROW6_Pin, ROW7_Pin};
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
 uint8_t matrix_buffer[8] = {0x00,0x18,0x24,0x24,0x3C,0x24,0x24,0x24 };
+
 void display_row(uint8_t data){
  8000414:	b580      	push	{r7, lr}
  8000416:	b084      	sub	sp, #16

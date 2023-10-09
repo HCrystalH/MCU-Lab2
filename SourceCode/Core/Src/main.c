@@ -200,6 +200,7 @@ uint16_t row_trigger[] = {ROW0_Pin, ROW1_Pin, ROW2_Pin, ROW3_Pin, ROW4_Pin, ROW5
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
 uint8_t matrix_buffer[8] = {0x00,0x18,0x24,0x24,0x3C,0x24,0x24,0x24 };
+
 void display_row(uint8_t data){
 	for(int i = 0; i<MAX_LED_MATRIX; i++){
 		HAL_GPIO_WritePin(GPIOA, col_trigger[i], !(data&0x80));

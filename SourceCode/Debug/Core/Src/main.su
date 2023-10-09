@@ -1,6 +1,6 @@
-main.c:70:6:display7SEG	296	static
-main.c:136:6:update7SEG	16	static
-main.c:178:6:updateClockBuffer	4	static
+main.c:69:6:display7SEG	296	static
+main.c:135:6:update7SEG	16	static
+main.c:177:6:updateClockBuffer	4	static
 main.c:204:6:display_row	24	static
 main.c:212:6:reset_all_row	16	static
 main.c:218:6:updateLEDMatrix	16	static
