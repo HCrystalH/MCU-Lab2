@@ -57,7 +57,6 @@ void updateClockBuffer();
 
 void updateLEDMatrix(int* matrix_flag);
 void display_row(uint8_t data);
-void set_row();
 void reset_all_row();
 
 const int MAX_LED = 4;
@@ -200,7 +199,20 @@ uint16_t col_trigger[] = {ENM0_Pin, ENM1_Pin, ENM2_Pin, ENM3_Pin, ENM4_Pin, ENM5
 uint16_t row_trigger[] = {ROW0_Pin, ROW1_Pin, ROW2_Pin, ROW3_Pin, ROW4_Pin, ROW5_Pin, ROW6_Pin, ROW7_Pin};
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x18,0x24,0x42,0x42,0x7E,0x42,0x42,0x42};
+uint8_t matrix_buffer[8] = {0x00,0x18,0x24,0x24,0x3C,0x24,0x24,0x24 };
+void display_row(uint8_t data){
+	for(int i = 0; i<MAX_LED_MATRIX; i++){
+		HAL_GPIO_WritePin(GPIOA, col_trigger[i], !(data&0x80));
+		data = data<<1;
+	}
+}
+
+
+void reset_all_row(){
+	for(int i = 0; i<MAX_LED_MATRIX; i++){
+		HAL_GPIO_WritePin(GPIOB, row_trigger[i], SET);
+	}
+}
 
 void updateLEDMatrix(int* matrix_flag){
     switch (*matrix_flag){
@@ -263,25 +275,6 @@ void updateLEDMatrix(int* matrix_flag){
         default:
             break;
     }
-}
-void display_row(uint8_t data){
-	for(int i = 0; i<MAX_LED_MATRIX; i++){
-		HAL_GPIO_WritePin(GPIOA, col_trigger[i], !(data&0x80));
-		data = data<<1;
-	}
-}
-
-void set_row(){
-	HAL_GPIO_WritePin(GPIOB, row_trigger[0], RESET);
-	for(int i = 0; i<MAX_LED_MATRIX; i++){
-			HAL_GPIO_WritePin(GPIOA, col_trigger[i], RESET);
-	}
-
-}
-void reset_all_row(){
-	for(int i = 0; i<MAX_LED_MATRIX; i++){
-		HAL_GPIO_WritePin(GPIOB, row_trigger[i], RESET);
-	}
 }
 
 /* USER CODE END 0 */
