@@ -55,7 +55,7 @@ void display7SEG(int num);
 void update7SEG(int index);
 void updateClockBuffer();
 
-void updateLEDMatrix(int* matrix_flag);
+void updateLEDMatrix(int* index,uint8_t* matrix_flag);
 void display_row(uint8_t data);
 void reset_all_row();
 
@@ -215,7 +215,7 @@ void reset_all_row(){
 }
 
 
-void updateLEDMatrix(int* matrix_flag){
+void updateLEDMatrix(int* matrix_flag,uint8_t* matrix_buffer){
     switch (*matrix_flag){
         case 0:{
         	(*matrix_flag)++;
@@ -362,7 +362,7 @@ int main(void)
 	  		if(index_led > 3)	index_led = 0;
 
 	  		//Exercise 10
-	  		updateLEDMatrix(&matrix_flag);
+	  		updateLEDMatrix(&matrix_flag, matrix_buffer);
 	  }
 	 if(timer2_flag == 1){
 	 	 setTimer2(100);
